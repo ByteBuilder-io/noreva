@@ -1,0 +1,117 @@
+.swiper-zoom-container {
+  overflow: hidden;
+  width: 100%; /* Asegura que el contenedor llene el slide */
+  height: 100%; /* Ajusta esto según la altura deseada para tus slides */
+}
+
+.zoom-image {
+  /* Asegura que la transición sea suave */
+  transition: transform 2s ease-in-out;
+  /* Inicia la animación al cargar la página */
+  animation: zoomIn 10s forwards;
+  filter: brightness(80%);
+}
+
+/* Define el efecto de zoom */
+@keyframes zoomIn {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(
+      1.5
+    ); /* Ajusta este valor para controlar el nivel de zoom */
+  }
+}
+
+.swiper-container {
+  position: relative;
+}
+
+.swiper-pagination-custom {
+  position: absolute;
+  bottom: 0 !important; /* Ajusta la posición inferior según sea necesario */
+  right: 100px !important; /* Aumenta o disminuye este valor según lo lejos que quieras que estén las tarjetas del borde derecho */
+  z-index: 10;
+  left: auto !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start !important;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 767px) {
+  .swiper-pagination-custom {
+    position: static !important; /* Elimina la posición absoluta */
+    right: auto !important; /* Restablece la propiedad right */
+    left: auto !important; /* Restablece la propiedad left */
+    width: 100%; /* Asegura que el contenedor ocupe el ancho completo */
+    margin-top: 20px; /* Añade un poco de espacio por encima de las tarjetas */
+  }
+}
+
+/* Estilo para el índice de paginación */
+.swiper-pagination-index {
+  display: block; /* Hace que el índice aparezca en su propia línea */
+  font-weight: bold; /* Opcional: Aumenta el peso de la fuente del índice */
+  margin-bottom: 0px; /* Ajusta el espacio entre el índice y el título */
+}
+
+/* Estilo general de las tarjetas */
+.card {
+  padding: 30px 60px;
+  background-color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer; /* Cambia el cursor a puntero para indicar que es un enlace */
+}
+@media (max-width: 767px) {
+  .card {
+    padding: 10px 10px;
+    font-size: 12px;
+  }
+}
+
+/* El texto dentro de las tarjetas no activas tiene opacidad reducida */
+.card p {
+  transition: opacity 0.3s; /* Transición suave para la opacidad del texto */
+  opacity: 0.3; /* Opacidad inicial reducida para el texto en tarjetas no activas */
+  margin: 0; /* Elimina los márgenes por defecto para <p> */
+  color: black; /* Asegura que el texto sea legible */
+}
+
+/* Al hacer hover sobre las tarjetas no activas, solo el texto cambia de opacidad */
+.card:not(.card-active):hover p {
+  opacity: 0.8; /* Aumenta la opacidad del texto al hacer hover */
+}
+
+/* El texto dentro de las tarjetas activas tiene opacidad completa */
+.card-active p {
+  opacity: 1; /* Opacidad completa para el texto en la tarjeta activa */
+}
+
+/* Línea debajo del texto de la tarjeta activa */
+.card-active:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  /* Color de la línea */
+}
+
+.mapboxgl-popup {
+  max-width: 500px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Sitka';
+}
+
+.title-popup{
+  text-align: center;
+  font-size: 18px;
+}

@@ -1,0 +1,10 @@
+{
+  "extends": "next",
+  "plugins": ["simple-import-sort"],
+  "rules": {
+    "@next/next/no-document-import-in-page": "off",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
+    "react-hooks/exhaustive-deps": "error"
+  }
+}

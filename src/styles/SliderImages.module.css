@@ -1,0 +1,17 @@
+/* SliderImages.module.css */
+.swiperContainer .swiper-pagination-bullets {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Ajusta este valor según sea necesario para tu diseño */
+}
+
+.swiperContainer .swiper-pagination-bullet {
+  width: 10px; /* Tamaño del bullet */
+  height: 10px; /* Tamaño del bullet */
+  background: #000; /* Color del bullet */
+  opacity: 1;
+}
+
+.swiperContainer .swiper-pagination-bullet-active {
+  background: #007aff; /* Color del bullet activo */
+}
