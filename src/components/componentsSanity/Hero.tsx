@@ -22,7 +22,7 @@ const Hero = ({ data }) => {
       },
     ).url
     setVideoUrl(url)
-  }, [breakpoint])
+  }, [breakpoint, data.video.asset._ref, data.videoMobile.asset._ref])
 
   const handleScroll = () => {
     setScrollY(window.scrollY)

@@ -39,17 +39,16 @@ interface Navbar {
 
 export default function Nav({ logo }: { logo?: string }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const client = getClient(undefined)
   const [data, setData] = useState<Navbar>(undefined)
 
   useEffect(() => {
     const getData = async () => {
+      const client = getClient(undefined)
       const settings = await client.fetch(settingsQuery)
-      console.log(settings[0].navbar)
       setData(settings[0].navbar)
     }
     if (data === undefined) getData()
-  }, [])
+  }, [data])
 
   return (
     <>
