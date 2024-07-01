@@ -1,17 +1,15 @@
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import {
   Box,
-  Button,
   Drawer,
-  DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
-  DrawerHeader,
   DrawerOverlay,
   IconButton,
-  useDisclosure,
   Image,
-  Stack,
+  List,
+  ListItem,
+  useDisclosure,
+  Heading,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { getClient } from '~/lib/sanity.client'
@@ -40,6 +38,9 @@ interface Navbar {
 export default function Nav({ logo }: { logo?: string }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [data, setData] = useState<Navbar>(undefined)
+  const [hoveredImage, setHoveredImage] = useState<string | undefined>(
+    undefined,
+  )
 
   useEffect(() => {
     const getData = async () => {
@@ -48,6 +49,16 @@ export default function Nav({ logo }: { logo?: string }) {
       setData(settings[0].navbar)
     }
     if (data === undefined) getData()
+  }, [data])
+
+  useEffect(() => {
+    if (data && data.links.length > 0) {
+      setHoveredImage(urlForImage(data.links[0].image).url())
+      data.links.forEach((link) => {
+        const img = new window.Image()
+        img.src = urlForImage(link.image).url()
+      })
+    }
   }, [data])
 
   return (
@@ -82,27 +93,57 @@ export default function Nav({ logo }: { logo?: string }) {
         <DrawerOverlay />
         <DrawerContent>
           {data && (
-            <Box width={'100%'} h={'100%'}>
-              <IconButton
-                icon={<HamburgerIcon />}
-                aria-label="Open Menu"
-                variant="ghost"
-                onClick={() => onClose()}
-              />
-              <Stack
-                direction={{ base: 'column', lg: 'row' }}
-                width={'100%'}
-                h={'100%'}
+            <Box width={'100%'} height={'100%'} display={'flex'}>
+              <Box
+                width={'50%'}
+                display={'flex'}
+                flexDirection={'column'}
+                alignItems={'center'}
+                position="relative"
               >
-                <Box w={{ base: '', lg: '50%' }}>asd</Box>
-                <Box w={'50%'} borderWidth={2} borderColor={'red'}>
+                <IconButton
+                  icon={<CloseIcon boxSize={10} />}
+                  aria-label="Close Menu"
+                  variant="ghost"
+                  onClick={onClose}
+                  position="absolute"
+                  top={10}
+                  left={10}
+                />
+                <Heading as="h1" fontSize={'70px'} my={10}>
+                  NOREVA
+                </Heading>
+                <List spacing={3} textAlign={'center'}>
+                  {data.links.map((link, index) => (
+                    <ListItem
+                      key={index}
+                      onMouseEnter={() =>
+                        setHoveredImage(urlForImage(link.image).url())
+                      }
+                      onMouseLeave={() =>
+                        setHoveredImage(urlForImage(data.links[0].image).url())
+                      }
+                      cursor={'pointer'}
+                      _hover={{ color: 'teal.500' }}
+                    >
+                      <Heading as="h1" fontSize={'100px'} my={10}>
+                        {link.title}
+                      </Heading>
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+              <Box width={'50%'} height={'100%'}>
+                {hoveredImage && (
                   <Image
-                    src={urlForImage(data.links[0].image).url()}
+                    src={hoveredImage}
                     alt={''}
-                    height="100%"
+                    objectFit={'cover'}
+                    width={'100%'}
+                    height={'100%'}
                   />
-                </Box>
-              </Stack>
+                )}
+              </Box>
             </Box>
           )}
         </DrawerContent>

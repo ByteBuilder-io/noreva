@@ -36,7 +36,6 @@ const Footer = ({ data }: { data: any }) => {
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
       color={useColorModeValue('gray.700', 'gray.200')}
-      marginTop={'1000px'}
     >
       <Container maxW={'1420px'} py={10}>
         <Stack
