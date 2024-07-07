@@ -60,7 +60,12 @@ const Hero = ({ data }) => {
   }
 
   return (
-    <Box position="relative" width="full" height="100vh" overflow="hidden">
+    <Box
+      position="relative"
+      width="full"
+      height={{ base: '90vh', lg: '100vh' }}
+      overflow="hidden"
+    >
       <video
         src={videoUrl}
         style={{
@@ -74,6 +79,7 @@ const Hero = ({ data }) => {
         autoPlay
         muted
         loop
+        playsInline
       ></video>
       {!isFixed && (
         <Image

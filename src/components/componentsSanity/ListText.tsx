@@ -22,8 +22,13 @@ const ListText = ({ data }) => {
 
   return (
     <div style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}>
-      <Container m={'auto'} maxW={'100%'} pt={'250px'} pb={'250px'}>
-        <Stack spacing={20}>
+      <Container
+        m={'auto'}
+        maxW={'100%'}
+        pt={{ base: '100px', lg: '250px' }}
+        pb={{ base: '100px', lg: '250px' }}
+      >
+        <Stack spacing={{ base: 10, lg: 20 }}>
           {data.columns.map((item, index) => (
             <Box
               key={index}
@@ -39,19 +44,23 @@ const ListText = ({ data }) => {
                 play={hoverIndex === index}
               >
                 <Stack
-                  ml={index % 2 === 0 ? '20%' : '30%'}
+                  ml={index % 2 === 0 ? '5%' : '10%'}
                   direction={'row'}
                   overflowY={'hidden'}
                   w={'100%'}
                   position="relative" // Añadir position:relative al Stack
                 >
-                  <Heading as="h1" fontSize="250px" fontWeight="bold">
+                  <Heading
+                    as="h1"
+                    fontSize={{ base: '50px', lg: '130px' }}
+                    fontWeight="bold"
+                  >
                     {item.title}
                   </Heading>
                   <Image
                     src={urlForImage(item.image).url()}
                     alt={item.text}
-                    boxSize="250px"
+                    boxSize={{ base: '50px', lg: '130px' }}
                     ml={2}
                   />
                   {/* Espacio entre textos adicionales */}
