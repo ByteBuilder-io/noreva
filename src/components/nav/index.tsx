@@ -10,6 +10,7 @@ import {
   ListItem,
   useDisclosure,
   Heading,
+  useBreakpoint,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { getClient } from '~/lib/sanity.client'
@@ -41,6 +42,7 @@ export default function Nav({ logo }: { logo?: string }) {
   const [hoveredImage, setHoveredImage] = useState<string | undefined>(
     undefined,
   )
+  const breakpoint = useBreakpoint({ ssr: false })
 
   useEffect(() => {
     const getData = async () => {
@@ -95,14 +97,14 @@ export default function Nav({ logo }: { logo?: string }) {
           {data && (
             <Box width={'100%'} height={'100%'} display={'flex'}>
               <Box
-                width={'50%'}
+                width={{ base: '100%', lg: '50%' }}
                 display={'flex'}
                 flexDirection={'column'}
                 alignItems={'center'}
                 position="relative"
               >
                 <IconButton
-                  icon={<CloseIcon boxSize={10} />}
+                  icon={<CloseIcon boxSize={{ base: 6, lg: 10 }} />}
                   aria-label="Close Menu"
                   variant="ghost"
                   onClick={onClose}
@@ -110,7 +112,11 @@ export default function Nav({ logo }: { logo?: string }) {
                   top={10}
                   left={10}
                 />
-                <Heading as="h1" fontSize={'70px'} my={10}>
+                <Heading
+                  as="h1"
+                  fontSize={{ base: '30px', lg: '70px' }}
+                  my={10}
+                >
                   NOREVA
                 </Heading>
                 <List spacing={3} textAlign={'center'}>
@@ -126,24 +132,30 @@ export default function Nav({ logo }: { logo?: string }) {
                       cursor={'pointer'}
                       _hover={{ color: 'teal.500' }}
                     >
-                      <Heading as="h1" fontSize={'100px'} my={10}>
+                      <Heading
+                        as="h1"
+                        fontSize={{ base: '30px', lg: '100px' }}
+                        my={10}
+                      >
                         {link.title}
                       </Heading>
                     </ListItem>
                   ))}
                 </List>
               </Box>
-              <Box width={'50%'} height={'100%'}>
-                {hoveredImage && (
-                  <Image
-                    src={hoveredImage}
-                    alt={''}
-                    objectFit={'cover'}
-                    width={'100%'}
-                    height={'100%'}
-                  />
-                )}
-              </Box>
+              {breakpoint !== 'base' && (
+                <Box width={'50%'} height={'100%'}>
+                  {hoveredImage && (
+                    <Image
+                      src={hoveredImage}
+                      alt={''}
+                      objectFit={'cover'}
+                      width={'100%'}
+                      height={'100%'}
+                    />
+                  )}
+                </Box>
+              )}
             </Box>
           )}
         </DrawerContent>

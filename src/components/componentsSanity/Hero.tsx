@@ -63,7 +63,7 @@ const Hero = ({ data }) => {
     <Box
       position="relative"
       width="full"
-      height={{ base: '90vh', lg: '100vh' }}
+      height={{ base: '85vh', lg: '100vh' }}
       overflow="hidden"
     >
       <video

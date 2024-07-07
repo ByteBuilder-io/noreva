@@ -1,9 +1,17 @@
-import React, { useState } from 'react'
-import { Box, Container, Heading, Image, Stack } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import {
+  Box,
+  Container,
+  Heading,
+  Image,
+  Stack,
+  useBreakpoint,
+} from '@chakra-ui/react'
 import { urlForImage } from '~/lib/sanity.image'
 import Marquee from 'react-fast-marquee'
 
 const ListText = ({ data }) => {
+  const breakpoint = useBreakpoint({ ssr: false })
   const [hoverIndex, setHoverIndex] = useState(null)
   const [alreadyHovered, setAlreadyHovered] = useState(
     new Array(data.columns.length).fill(false),
@@ -38,10 +46,10 @@ const ListText = ({ data }) => {
             >
               <Marquee
                 gradient={false}
-                speed={300}
+                speed={breakpoint === 'base' ? 150 : 350}
                 style={{ minHeight: '100%' }}
                 autoFill={alreadyHovered[index]}
-                play={hoverIndex === index}
+                play={breakpoint === 'base' ? true : hoverIndex === index}
               >
                 <Stack
                   ml={index % 2 === 0 ? '5%' : '10%'}
@@ -64,7 +72,7 @@ const ListText = ({ data }) => {
                     ml={2}
                   />
                   {/* Espacio entre textos adicionales */}
-                  <Box w="200px" />
+                  <Box w="150px" />
                 </Stack>
               </Marquee>
             </Box>
