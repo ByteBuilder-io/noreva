@@ -4,22 +4,26 @@ import {
   Box,
   chakra,
   Container,
-  Flex,
-  IconButton,
-  Input,
-  SimpleGrid,
   Stack,
   Text,
   useColorModeValue,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Button,
   VisuallyHidden,
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ReactNode } from 'react'
+import { ReactNode, useRef, useState } from 'react'
 import * as Icons from 'react-icons/fa'
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
-
+import { FaWhatsapp } from 'react-icons/fa'
 import { urlForImage } from '~/lib/sanity.image'
+import useIsInViewport from '~/hooks/useIsInViewport' // Importa el hook
 
 const DynamicFontAwesomeIcon = ({ name }) => Icons[name]
 
@@ -32,10 +36,21 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
 }
 
 const Footer = ({ data }: { data: any }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const footerRef = useRef(null)
+  const isInViewport = useIsInViewport(footerRef, 0.6)
+  const [alredyClose, setAlredyClose] = useState(false)
+
+  // Abre el modal cuando el footer entra en el viewport
+  if (isInViewport && !isOpen && !alredyClose) {
+    onOpen()
+  }
+
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
       color={useColorModeValue('gray.700', 'gray.200')}
+      ref={footerRef}
     >
       <Container maxW={'1420px'} py={10}>
         <Stack
@@ -88,6 +103,35 @@ const Footer = ({ data }: { data: any }) => {
           </Stack>
         </Stack>
       </Container>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>¿Quiéres conocer el proyecto?</ModalHeader>
+          <ModalCloseButton
+            onClick={() => {
+              onClose()
+              setAlredyClose(true)
+            }}
+          />
+          <ModalBody>
+            <Text mb={4}>
+              Hola, vi en la página web de Novera y quiero más información, por
+              favor!
+            </Text>
+            <Button
+              as="a"
+              href={`https://wa.me/${data.number}?text=Hola, vi en la página web de Novera y quiero más información, por favor!`}
+              target="_blank"
+              rel="noopener noreferrer"
+              leftIcon={<FaWhatsapp />}
+              colorScheme="green"
+            >
+              Agenda tu visita
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }

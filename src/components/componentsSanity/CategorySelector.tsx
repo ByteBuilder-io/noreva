@@ -1,76 +1,37 @@
 import {
   Box,
   Container,
-  Heading,
   Image,
-  ScaleFade,
   Stack,
   Text,
+  useBreakpoint,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useRef } from 'react'
-import { Pagination, Navigation } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
-
-import useIsInViewport from '~/hooks/useIsInViewport'
 import { urlForImage } from '~/lib/sanity.image'
 import { fetchPageSlug } from '~/lib/sanity.queries'
 
-import styles from '../../styles/SliderImages.module.css'
 import Divider from '../divider/divider'
+import Marquee from 'react-fast-marquee'
 
 const CategorySelector = ({ data }: { data: any }) => {
   const ref = useRef(null)
-  const isInViewport = useIsInViewport(ref)
   return (
     <div
       ref={ref}
       style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}
     >
       {data.dividerTop && <Divider />}
-      <Container m={'auto'} maxW={'1420px'} pt={'70px'} pb={'70px'}>
+      <Container m={'auto'} maxW={'100%'} pt={'70px'} pb={'70px'}>
         <Stack
           direction={{ base: 'column', lg: 'row' }}
           spacing={10}
           display={{ base: 'none', md: 'flex' }}
         >
-          <ScaleFade initialScale={0.9} in={isInViewport}>
-            <Box>
-              <Text
-                color="gray.500"
-                fontSize="sm"
-                fontWeight="bold"
-                textTransform="uppercase"
-                mb={2}
-              >
-                [{data.preTitle}]
-              </Text>
-
-              <Heading size="xl" sx={{ whiteSpace: 'nowrap' }}>
-                {data.title}
-              </Heading>
-            </Box>
-          </ScaleFade>
           <SliderImages slides={data.backgroundImages} />
         </Stack>
 
         <Box display={{ base: 'auto', md: 'none' }}>
-          <ScaleFade initialScale={0.9} in={isInViewport}>
-            <Box pb={30}>
-              <Text
-                color="gray.500"
-                fontSize="sm"
-                fontWeight="bold"
-                textTransform="uppercase"
-                mb={2}
-              >
-                [{data.preTitle}]
-              </Text>
-              <Heading size="xl" sx={{ whiteSpace: 'nowrap' }}>
-                {data.title}
-              </Heading>
-            </Box>
-          </ScaleFade>
           <Box>
             <SliderImages slides={data.backgroundImages} />
           </Box>
@@ -82,28 +43,22 @@ const CategorySelector = ({ data }: { data: any }) => {
 }
 
 const SliderImages = ({ slides }: { slides: any }) => {
+  const breakpoint = useBreakpoint({ ssr: false })
   const router = useRouter()
   return (
-    <Swiper
-      modules={[Pagination, Navigation]}
-      slidesPerView={1} // Default number of slides per view (for small screens)
-      spaceBetween={15} // Space between slides
-      pagination={{
-        dynamicBullets: true,
-      }}
-      breakpoints={{
-        // when window width is >= 768px
-        768: {
-          slidesPerView: 3,
-        },
-      }}
-      className={styles.swiperContainer}
-      navigation={true}
+    <Marquee
+      gradient={false}
+      speed={breakpoint === 'base' ? 80 : 120}
+      style={{ minHeight: '100%' }}
+      autoFill={false}
+      play={true}
     >
       {slides.map((slide, index) => {
-        const url = urlForImage(slide.image).width(450).height(500).url()
+        let w = breakpoint === 'base' ? 225 : 450
+        let h = breakpoint === 'base' ? 250 : 500
+        const url = urlForImage(slide.image).width(w).height(h).url()
         return (
-          <SwiperSlide key={slide._key}>
+          <Stack key={slide._key} direction="row">
             <Stack mb="10">
               <Box
                 onClick={async () => {
@@ -126,10 +81,10 @@ const SliderImages = ({ slides }: { slides: any }) => {
                   }}
                 >
                   <Image
-                    htmlHeight="500px"
-                    htmlWidth="450px"
-                    width="450px"
-                    height="500px"
+                    htmlHeight={`${h}px`}
+                    htmlWidth={`${w}px`}
+                    width={`${w}px`}
+                    height={`${h}px`}
                     src={url}
                     alt={'title'}
                     style={{ transition: 'transform 0.3s ease' }}
@@ -139,16 +94,15 @@ const SliderImages = ({ slides }: { slides: any }) => {
                 </Box>
               </Box>
 
-              <Text fontSize="lg" fontWeight="bold">
+              <Text fontSize={{ base: '20px', lg: '20px' }} fontWeight="bold">
                 {slide.title}
               </Text>
-
-              <Text fontSize="md">{slide.subtitle}</Text>
             </Stack>
-          </SwiperSlide>
+            <Box w={{ base: '10px', lg: '50px' }} />
+          </Stack>
         )
       })}
-    </Swiper>
+    </Marquee>
   )
 }
 
