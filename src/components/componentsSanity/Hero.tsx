@@ -4,12 +4,14 @@ import { Box, Image, useBreakpoint, IconButton } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { urlForImage } from '~/lib/sanity.image'
 import Nav from '../nav'
+import { useScrollContext } from '~/utils/useScrollContext'
 
 const Hero = ({ data }) => {
   const [scrollY, setScrollY] = useState(0)
   const [isFixed, setIsFixed] = useState(false)
   const [videoUrl, setVideoUrl] = useState('')
   const breakpoint = useBreakpoint({ ssr: true })
+  const { setHasHero } = useScrollContext()
 
   useEffect(() => {
     const url = getFileAsset(
@@ -36,9 +38,11 @@ const Hero = ({ data }) => {
   }, [])
 
   useEffect(() => {
+    setHasHero(true)
     const maxScroll = 650 // Ajustado para que la transición ocurra más tarde
     setIsFixed(scrollY >= maxScroll)
-  }, [scrollY])
+    return () => setHasHero(false)
+  }, [scrollY, setHasHero])
 
   const getTitleStyle = (): CSSProperties => {
     const maxScroll = 650 // Ajustado para que la transición ocurra más tarde
@@ -63,7 +67,7 @@ const Hero = ({ data }) => {
     <Box
       position="relative"
       width="full"
-      height={{ base: '85vh', lg: '100vh' }}
+      height={{ base: '90vh', lg: '100vh' }}
       overflow="hidden"
     >
       <video

@@ -8,6 +8,7 @@ import { css, Global } from '@emotion/react'
 import type { AppProps } from 'next/app'
 import { lazy } from 'react'
 import { Html } from 'next/document'
+import { ScrollProvider } from '~/utils/useScrollContext'
 
 export interface SharedPageProps {
   draftMode: boolean
@@ -42,8 +43,9 @@ export default function App({
       />
       <link rel="preload" href="/fonts/SitkaVF.ttf" as="font" type="font/ttf" />
       <ChakraProvider theme={theme}>
-        <Global
-          styles={css`
+        <ScrollProvider>
+          <Global
+            styles={css`
           @font-face {
             font-family: 'HankenGrotesk';
             src: url('/fonts/HankenGrotesk-Regular.ttf') format('truetype'),
@@ -57,14 +59,15 @@ export default function App({
               font-style: normal;
             }
           `}
-        />
-        {draftMode ? (
-          <PreviewProvider token={token}>
+          />
+          {draftMode ? (
+            <PreviewProvider token={token}>
+              <Component {...pageProps} />
+            </PreviewProvider>
+          ) : (
             <Component {...pageProps} />
-          </PreviewProvider>
-        ) : (
-          <Component {...pageProps} />
-        )}
+          )}
+        </ScrollProvider>
       </ChakraProvider>
     </>
   )

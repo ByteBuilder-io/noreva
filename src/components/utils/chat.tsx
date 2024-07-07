@@ -1,7 +1,14 @@
 import { Avatar, Box } from '@chakra-ui/react'
 import { FaWhatsapp } from 'react-icons/fa'
+import { useScrollContext } from '~/utils/useScrollContext'
 
-const WhatsAppButton = ({ data }: { data: any }) => {
+const WhatsAppButton = ({ data }) => {
+  const { isScrolledPast, hasHero } = useScrollContext()
+
+  if (hasHero && !isScrolledPast) {
+    return null
+  }
+
   return (
     <Box position="fixed" bottom={4} right={4} cursor="pointer">
       <a
