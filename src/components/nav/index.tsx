@@ -17,6 +17,7 @@ import { getClient } from '~/lib/sanity.client'
 import { urlForImage } from '~/lib/sanity.image'
 import { settingsQuery } from '~/lib/sanity.queries'
 import type { Image as SanityImage } from 'sanity'
+import Link from 'next/link'
 
 interface Link {
   title: string
@@ -42,7 +43,7 @@ export default function Nav({ logo }: { logo?: string }) {
   const [hoveredImage, setHoveredImage] = useState<string | undefined>(
     undefined,
   )
-  const breakpoint = useBreakpoint({ ssr: false })
+  const breakpoint = useBreakpoint({ ssr: true })
 
   useEffect(() => {
     const getData = async () => {
@@ -57,8 +58,10 @@ export default function Nav({ logo }: { logo?: string }) {
     if (data && data.links.length > 0) {
       setHoveredImage(urlForImage(data.links[0].image).url())
       data.links.forEach((link) => {
-        const img = new window.Image()
-        img.src = urlForImage(link.image).url()
+        if (typeof window !== 'undefined') {
+          const img = new window.Image()
+          img.src = urlForImage(link.image).url()
+        }
       })
     }
   }, [data])
@@ -85,9 +88,15 @@ export default function Nav({ logo }: { logo?: string }) {
           onClick={() => onOpen()}
         />
         {!logo && data && (
-          <Image src={urlForImage(data.logo).url()} alt={''} height="40px" />
+          <Link href={'/'}>
+            <Image src={urlForImage(data.logo).url()} alt={''} height="40px" />
+          </Link>
         )}
-        {logo && <Image src={logo} alt={''} height="40px" />}
+        {logo && (
+          <Link href={'/'}>
+            <Image src={logo} alt={''} height="40px" />
+          </Link>
+        )}
         <Box />
       </Box>
 

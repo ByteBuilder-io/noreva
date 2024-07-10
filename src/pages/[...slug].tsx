@@ -12,6 +12,7 @@ import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
 import { settingsQuery } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
+import Nav from '~/components/nav'
 
 interface Params extends ParsedUrlQuery {
   slug: string[]
@@ -56,14 +57,9 @@ export default function SlugPage(
 ) {
   return (
     <Container maxW={'1920px'} p={0}>
-      {/* <Suspense fallback={<LoadingBackdrop isOpen />}>
-        {props.settings && props.pages.length !== 0 && (
-          <Nav
-            data={props.settings[0].navbar}
-            transparent={props.pages[0].navSetting}
-          />
-        )}
-      </Suspense> */}
+      <Suspense fallback={<LoadingBackdrop isOpen />}>
+        <Nav />
+      </Suspense>
       {props.pages.length !== 0 &&
         props.pages[0].componentes.map((d, i) => (
           <Suspense fallback={<LoadingBackdrop isOpen />} key={i + d._type}>

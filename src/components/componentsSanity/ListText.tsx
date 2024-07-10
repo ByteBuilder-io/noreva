@@ -33,8 +33,8 @@ const ListText = ({ data }) => {
       <Container
         m={'auto'}
         maxW={'100%'}
-        pt={{ base: '100px', lg: '250px' }}
-        pb={{ base: '100px', lg: '250px' }}
+        pt={{ base: '100px', lg: '150px' }}
+        pb={{ base: '100px', lg: '150px' }}
       >
         <Stack spacing={{ base: 10, lg: 20 }}>
           {data.columns.map((item, index) => (

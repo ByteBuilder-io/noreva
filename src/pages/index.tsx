@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 
 import Hero from '~/components/componentsSanity/Hero'
+import MultipleTexts from '~/components/componentsSanity/MultipleTexts'
 import Footer from '~/components/footer'
 import WhatsAppButton from '~/components/utils/chat'
 import LoadingBackdrop from '~/components/utils/loading'

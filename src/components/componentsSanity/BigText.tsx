@@ -122,10 +122,10 @@ const BigText = ({ data }: { data: any }) => {
       ref={ref}
       style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}
     >
-      <Container m={'auto'} maxW={'1420px'} pt={'250px'} pb={'250px'}>
+      <Container m={'auto'} maxW={'1420px'} pt={'150px'} pb={'150px'}>
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: isInViewport ? 1 : 0, y: isInViewport ? 0 : 50 }}
+          initial={{ opacity: 0, y: 200 }}
+          animate={{ opacity: isInViewport ? 1 : 0, y: isInViewport ? 0 : 200 }}
           transition={{ duration: 0.9 }}
         >
           <PortableText value={data.text} components={components} />
@@ -141,10 +141,10 @@ const BigText = ({ data }: { data: any }) => {
                 return (
                   <Link href={d.link.url || '#'} target="_blank" key={d._key}>
                     <Image
-                      src={urlForImage(d.image).width(200).height(50).url()}
+                      src={urlForImage(d.image).url()}
                       alt={'image'}
                       width={200}
-                      height={50}
+                      height={100}
                     />
                   </Link>
                 )
