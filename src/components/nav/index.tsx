@@ -121,35 +121,44 @@ export default function Nav({ logo }: { logo?: string }) {
                   top={10}
                   left={10}
                 />
-                <Heading
-                  as="h1"
-                  fontSize={{ base: '30px', lg: '70px' }}
-                  my={10}
-                >
-                  NOREVA
-                </Heading>
+                {data && (
+                  <Link href={'/'} style={{ marginTop: '25px' }}>
+                    <Image
+                      src={urlForImage(data.logo).url()}
+                      alt={''}
+                      height="60px"
+                    />
+                  </Link>
+                )}
                 <List spacing={3} textAlign={'center'}>
-                  {data.links.map((link, index) => (
-                    <ListItem
-                      key={index}
-                      onMouseEnter={() =>
-                        setHoveredImage(urlForImage(link.image).url())
-                      }
-                      onMouseLeave={() =>
-                        setHoveredImage(urlForImage(data.links[0].image).url())
-                      }
-                      cursor={'pointer'}
-                      _hover={{ color: 'teal.500' }}
-                    >
-                      <Heading
-                        as="h1"
-                        fontSize={{ base: '30px', lg: '100px' }}
-                        my={10}
+                  {data.links.map((link, index) => {
+                    console.log(link)
+                    return (
+                      <ListItem
+                        key={index}
+                        onMouseEnter={() =>
+                          setHoveredImage(urlForImage(link.image).url())
+                        }
+                        onMouseLeave={() =>
+                          setHoveredImage(
+                            urlForImage(data.links[0].image).url(),
+                          )
+                        }
+                        cursor={'pointer'}
+                        _hover={{ color: 'teal.500' }}
                       >
-                        {link.title}
-                      </Heading>
-                    </ListItem>
-                  ))}
+                        <Link href={`/${link.slug}`}>
+                          <Heading
+                            as="h1"
+                            fontSize={{ base: '30px', lg: '100px' }}
+                            my={10}
+                          >
+                            {link.title}
+                          </Heading>
+                        </Link>
+                      </ListItem>
+                    )
+                  })}
                 </List>
               </Box>
               {breakpoint !== 'base' && (

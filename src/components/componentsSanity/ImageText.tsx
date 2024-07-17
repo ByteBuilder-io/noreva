@@ -106,8 +106,10 @@ const LeftImage = ({ data }: { data: any }) => {
     <Stack
       direction={{ base: 'column', lg: 'row' }}
       spacing={{ base: 10, lg: 0 }}
+      align="center"
+      justify="center"
     >
-      <Box maxWidth={710}>
+      <Box maxWidth={710} mx="auto">
         <Swiper
           modules={[Pagination, Navigation]}
           slidesPerView={1} // Default number of slides per view (for small screens)
@@ -131,7 +133,7 @@ const LeftImage = ({ data }: { data: any }) => {
           })}
         </Swiper>
       </Box>
-      <Box maxW={700} marginLeft={{ base: 0, lg: 10 }}>
+      <Box maxW={700} mx="auto" marginLeft={{ base: 0, lg: 10 }}>
         <PortableText value={data.text} components={components} />
       </Box>
     </Stack>
@@ -143,11 +145,13 @@ const RightImage = ({ data }: { data: any }) => {
     <Stack
       direction={{ base: 'column', lg: 'row' }}
       spacing={{ base: 10, lg: 0 }}
+      align="center"
+      justify="center"
     >
-      <Box maxW={700} marginRight={{ base: 0, lg: 10 }}>
+      <Box maxW={700} mx="auto" marginRight={{ base: 0, lg: 10 }}>
         <PortableText value={data.text} components={components} />
       </Box>
-      <Box maxWidth={710}>
+      <Box maxWidth={710} mx="auto">
         <Swiper
           modules={[Pagination, Navigation]}
           slidesPerView={1} // Default number of slides per view (for small screens)
@@ -164,7 +168,7 @@ const RightImage = ({ data }: { data: any }) => {
                   src={urlForImage(slide.image).width(710).height(710).url()}
                   alt={'image'}
                   width={710}
-                  height={700}
+                  height={710}
                 />
               </SwiperSlide>
             )

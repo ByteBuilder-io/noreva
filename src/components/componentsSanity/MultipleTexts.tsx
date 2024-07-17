@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react'
+import { Box, useBreakpoint } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import MovingText from 'react-moving-text'
 
@@ -38,7 +38,8 @@ const MultipleTexts = ({ data }: { data: any }) => {
 }
 
 const RenderText = ({ data }) => {
-  console.log(data)
+  const breakpoint = useBreakpoint({ ssr: false })
+
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [key, setKey] = useState(0) // Estado para reiniciar la animación
 
@@ -46,7 +47,7 @@ const RenderText = ({ data }) => {
     const interval = setInterval(() => {
       setCurrentTextIndex((prevIndex) => (prevIndex + 1) % data.columns.length)
       setKey((prevKey) => prevKey + 1) // Cambia el key para reiniciar la animación
-    }, 10000)
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [data])
@@ -55,13 +56,16 @@ const RenderText = ({ data }) => {
     <MovingText
       key={key} // Cambia el key para reiniciar la animación
       type="fadeInFromBottom"
-      duration="700ms"
+      duration="500ms"
       delay="0s"
       direction="normal"
       timing="linear"
       iteration="1"
       fillMode="none"
-      style={{ fontSize: '6rem', fontWeight: 'bold' }} // Ajusta el tamaño y el estilo del texto
+      style={{
+        fontSize: breakpoint === 'base' ? '2.5rem' : '6rem',
+        fontWeight: 'bold',
+      }} // Ajusta el tamaño y el estilo del texto
     >
       {data.columns[currentTextIndex].title}
     </MovingText>

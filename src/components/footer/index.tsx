@@ -40,7 +40,7 @@ const Footer = ({ data }: { data: any }) => {
   const footerRef = useRef(null)
   const isInViewport = useIsInViewport(footerRef, 0.6)
   const [alredyClose, setAlredyClose] = useState(false)
-
+  console.log(isInViewport)
   // Abre el modal cuando el footer entra en el viewport
   if (isInViewport && !isOpen && !alredyClose) {
     onOpen()

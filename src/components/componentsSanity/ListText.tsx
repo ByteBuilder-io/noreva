@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Container,
@@ -6,6 +6,7 @@ import {
   Image,
   Stack,
   useBreakpoint,
+  Text,
 } from '@chakra-ui/react'
 import { urlForImage } from '~/lib/sanity.image'
 import Marquee from 'react-fast-marquee'
@@ -26,6 +27,77 @@ const ListText = ({ data }) => {
 
   const handleMouseLeave = () => {
     setHoverIndex(null)
+  }
+
+  const getPatternedContent = (item, rowIndex) => {
+    const textSegments = item.title.split(' - ')
+    const segmentsLength = textSegments.length
+    let patternedContent = []
+
+    if (segmentsLength > 1) {
+      for (let i = 0; i < segmentsLength; i++) {
+        const shouldInsertImage =
+          (rowIndex % 3 === 0 && i === 2) ||
+          (rowIndex % 3 === 1 && i === 1) ||
+          (rowIndex % 3 === 2 && i === 3)
+
+        if (shouldInsertImage) {
+          patternedContent.push(
+            <React.Fragment key={`image-${i}`}>
+              <Image
+                src={urlForImage(item.image).url()}
+                alt={item.text}
+                boxSize={{ base: '50px', lg: '130px' }}
+                mx={2}
+              />
+              <Heading
+                as="h1"
+                fontSize={{ base: '50px', lg: '130px' }}
+                fontWeight="bold"
+                mx={2}
+              >
+                -
+              </Heading>
+            </React.Fragment>,
+          )
+        }
+
+        patternedContent.push(
+          <React.Fragment key={`text-${i}`}>
+            <Heading
+              as="h1"
+              fontSize={{ base: '50px', lg: '130px' }}
+              fontWeight="bold"
+              mx={2}
+            >
+              {textSegments[i]} -
+            </Heading>
+          </React.Fragment>,
+        )
+      }
+    } else {
+      // Si no hay "-", solo muestra el texto seguido de la imagen
+      patternedContent = [
+        <Heading
+          key={`text-only`}
+          as="h1"
+          fontSize={{ base: '50px', lg: '130px' }}
+          fontWeight="bold"
+          mx={2}
+        >
+          {item.title}
+        </Heading>,
+        <Image
+          key={`image-only`}
+          src={urlForImage(item.image).url()}
+          alt={item.text}
+          boxSize={{ base: '50px', lg: '130px' }}
+          mx={2}
+        />,
+      ]
+    }
+
+    return patternedContent
   }
 
   return (
@@ -56,21 +128,9 @@ const ListText = ({ data }) => {
                   direction={'row'}
                   overflowY={'hidden'}
                   w={'100%'}
-                  position="relative" // Añadir position:relative al Stack
+                  position="relative"
                 >
-                  <Heading
-                    as="h1"
-                    fontSize={{ base: '50px', lg: '130px' }}
-                    fontWeight="bold"
-                  >
-                    {item.title}
-                  </Heading>
-                  <Image
-                    src={urlForImage(item.image).url()}
-                    alt={item.text}
-                    boxSize={{ base: '50px', lg: '130px' }}
-                    ml={2}
-                  />
+                  {getPatternedContent(item, index)}
                   {/* Espacio entre textos adicionales */}
                   <Box w="150px" />
                 </Stack>

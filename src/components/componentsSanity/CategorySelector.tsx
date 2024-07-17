@@ -52,6 +52,7 @@ const SliderImages = ({ slides }: { slides: any }) => {
       style={{ minHeight: '100%' }}
       autoFill={false}
       play={true}
+      pauseOnHover={true}
     >
       {slides.map((slide, index) => {
         let w = breakpoint === 'base' ? 225 : 450
