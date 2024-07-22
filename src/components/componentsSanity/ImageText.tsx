@@ -9,6 +9,7 @@ import {
   Stack,
   Text,
   UnorderedList,
+  useBreakpoint,
 } from '@chakra-ui/react'
 import { PortableText, PortableTextReactComponents } from '@portabletext/react'
 import Image from 'next/image'
@@ -79,6 +80,7 @@ const components: Partial<PortableTextReactComponents> = {
 }
 
 const ImageText = ({ data }: { data: any }) => {
+  const breakpoint = useBreakpoint({ ssr: false })
   const ref = useRef(null)
   const isInViewport = useIsInViewport(ref, 0.2)
   return (
@@ -87,14 +89,25 @@ const ImageText = ({ data }: { data: any }) => {
       style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}
     >
       {data.dividerTop && <Divider />}
-      <Container m={'auto'} maxW={'1420px'} pt={'70px'} pb={'70px'}>
-        <ScaleFade initialScale={0.9} in={isInViewport}>
-          {data.imagePosition ? (
-            <RightImage data={data} />
-          ) : (
+      <Container
+        m={'auto'}
+        maxW={'1420px'}
+        pt={{ base: '30px', lg: '70px' }}
+        pb={{ base: '30px', lg: '70px' }}
+      >
+        {breakpoint !== 'base' ? (
+          <ScaleFade initialScale={0.9} in={isInViewport}>
+            {data.imagePosition ? (
+              <RightImage data={data} />
+            ) : (
+              <LeftImage data={data} />
+            )}
+          </ScaleFade>
+        ) : (
+          <ScaleFade initialScale={0.9} in={isInViewport}>
             <LeftImage data={data} />
-          )}
-        </ScaleFade>
+          </ScaleFade>
+        )}
       </Container>
       {data.dividerBottom && <Divider />}
     </div>
@@ -109,7 +122,7 @@ const LeftImage = ({ data }: { data: any }) => {
       align="center"
       justify="center"
     >
-      <Box maxWidth={710} mx="auto">
+      <Box maxWidth={{ base: '100vw', lg: 710 }} mx={{ base: '', lg: 'auto' }}>
         <Swiper
           modules={[Pagination, Navigation]}
           slidesPerView={1} // Default number of slides per view (for small screens)
@@ -145,13 +158,17 @@ const RightImage = ({ data }: { data: any }) => {
     <Stack
       direction={{ base: 'column', lg: 'row' }}
       spacing={{ base: 10, lg: 0 }}
-      align="center"
-      justify="center"
+      align={{ base: '', lg: 'center' }}
+      justify={{ base: '', lg: 'center' }}
     >
-      <Box maxW={700} mx="auto" marginRight={{ base: 0, lg: 10 }}>
+      <Box
+        maxW={700}
+        mx={{ base: '', lg: 'auto' }}
+        marginRight={{ base: '', lg: 10 }}
+      >
         <PortableText value={data.text} components={components} />
       </Box>
-      <Box maxWidth={710} mx="auto">
+      <Box maxWidth={{ base: '100vw', lg: 710 }} mx={{ base: '', lg: 'auto' }}>
         <Swiper
           modules={[Pagination, Navigation]}
           slidesPerView={1} // Default number of slides per view (for small screens)

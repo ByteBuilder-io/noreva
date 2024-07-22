@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ReactNode, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import * as Icons from 'react-icons/fa'
 import { FaWhatsapp } from 'react-icons/fa'
 import { urlForImage } from '~/lib/sanity.image'
@@ -36,15 +36,28 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
 }
 
 const Footer = ({ data }: { data: any }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const footerRef = useRef(null)
-  const isInViewport = useIsInViewport(footerRef, 0.6)
-  const [alredyClose, setAlredyClose] = useState(false)
-  console.log(isInViewport)
+
   // Abre el modal cuando el footer entra en el viewport
-  if (isInViewport && !isOpen && !alredyClose) {
-    onOpen()
-  }
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [showModal, setShowModal] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        setShowModal(true)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (showModal) {
+      onOpen()
+    }
+  }, [showModal, onOpen])
 
   return (
     <Box
@@ -111,7 +124,6 @@ const Footer = ({ data }: { data: any }) => {
           <ModalCloseButton
             onClick={() => {
               onClose()
-              setAlredyClose(true)
             }}
           />
           <ModalBody>

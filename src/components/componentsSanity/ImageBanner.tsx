@@ -50,39 +50,42 @@ const ImageBanner = ({ data }: { data: any }) => {
                 {data.title}
               </Heading>
             </VStack>
-
-            <Button
-              position="absolute"
-              bottom="10%"
-              left="10%"
-              size="lg"
-              borderRadius={0}
-              onClick={async () => {
-                if (data.linkButton.linkType === 'virtual') {
-                  onOpen()
-                }
-                if (data.linkButton.linkType === 'internal') {
-                  const url = await fetchPageSlug(
-                    data.linkButton.pageReference._ref,
-                  )
-                  router.push(url)
-                }
-                if (data.linkButton.linkType === 'external') {
-                  router.push(data.linkButton.url)
-                }
-              }}
-            >
-              {data.buttonText}
-            </Button>
+            {data.buttonText && (
+              <Button
+                position="absolute"
+                bottom="10%"
+                left="10%"
+                size="lg"
+                borderRadius={0}
+                onClick={async () => {
+                  if (data.linkButton.linkType === 'virtual') {
+                    onOpen()
+                  }
+                  if (data.linkButton.linkType === 'internal') {
+                    const url = await fetchPageSlug(
+                      data.linkButton.pageReference._ref,
+                    )
+                    router.push(url)
+                  }
+                  if (data.linkButton.linkType === 'external') {
+                    router.push(data.linkButton.url)
+                  }
+                }}
+              >
+                {data.buttonText}
+              </Button>
+            )}
           </Box>
         )}
       </Box>
-      <IframModal
-        url={data.linkButton.recorridoVirtual}
-        isOpen={isOpen}
-        onClose={onClose}
-        onOpen={onOpen}
-      />
+      {data.buttonText && data.linkButton.linkType === 'virtual' && (
+        <IframModal
+          url={data.linkButton.recorridoVirtual}
+          isOpen={isOpen}
+          onClose={onClose}
+          onOpen={onOpen}
+        />
+      )}
       {data.dividerBottom && <Divider />}
     </>
   )

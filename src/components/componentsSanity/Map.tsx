@@ -161,19 +161,21 @@ const RenderMap = ({ cords, point, nameDot }) => {
       logoPosition: undefined, // Esto oculta el logo
       attributionControl: false, // Esto oculta los derechos de autor
     })
-
-    const geojson = {
-      type: 'FeatureCollection',
-      features: point.map((e) => ({
-        type: 'Feature',
-        properties: {
-          description: `<p class='title-popup'>${e.nameDot}</p>`,
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [Number(e.lat), Number(e.long)],
-        },
-      })),
+    let geojson
+    if (point) {
+      geojson = {
+        type: 'FeatureCollection',
+        features: point.map((e) => ({
+          type: 'Feature',
+          properties: {
+            description: `<p class='title-popup'>${e.nameDot}</p>`,
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [Number(e.lat), Number(e.long)],
+          },
+        })),
+      }
     }
 
     map.on('load', () => {

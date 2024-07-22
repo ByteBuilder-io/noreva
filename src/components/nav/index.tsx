@@ -82,7 +82,7 @@ export default function Nav({ logo }: { logo?: string }) {
         zIndex={2}
       >
         <IconButton
-          icon={<HamburgerIcon />}
+          icon={<HamburgerIcon boxSize={{ base: 6, lg: 8 }} />}
           aria-label="Open Menu"
           variant="ghost"
           onClick={() => onOpen()}
