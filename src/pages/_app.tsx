@@ -8,7 +8,6 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { css, Global } from '@emotion/react'
 import type { AppProps } from 'next/app'
 import { lazy } from 'react'
-import { Html } from 'next/document'
 import { ScrollProvider } from '~/utils/useScrollContext'
 
 export interface SharedPageProps {
