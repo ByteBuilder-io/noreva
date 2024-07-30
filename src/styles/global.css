@@ -114,4 +114,5 @@
 .title-popup{
   text-align: center;
   font-size: 18px;
+  font-family: var(--chakra-fonts-heading)
 }

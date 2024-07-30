@@ -119,20 +119,19 @@ export default function Nav({ logo }: { logo?: string }) {
                   onClick={onClose}
                   position="absolute"
                   top={10}
-                  left={10}
+                  left={{ base: 3, lg: 10 }}
                 />
                 {data && (
-                  <Link href={'/'} style={{ marginTop: '25px' }}>
+                  <Link href={'/'} style={{ marginTop: '30px' }}>
                     <Image
                       src={urlForImage(data.logo).url()}
                       alt={''}
-                      height="60px"
+                      height={{ base: '50px', lg: '60px' }}
                     />
                   </Link>
                 )}
                 <List spacing={3} textAlign={'center'}>
                   {data.links.map((link, index) => {
-                    console.log(link)
                     return (
                       <ListItem
                         key={index}
@@ -146,6 +145,9 @@ export default function Nav({ logo }: { logo?: string }) {
                         }
                         cursor={'pointer'}
                         _hover={{ color: 'teal.500' }}
+                        onClick={() => {
+                          onClose()
+                        }}
                       >
                         <Link href={`/${link.slug}`}>
                           <Heading

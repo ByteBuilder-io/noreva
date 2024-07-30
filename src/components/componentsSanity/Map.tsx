@@ -237,7 +237,7 @@ const RenderMap = ({ cords, point, nameDot }) => {
       })
         .setHTML(
           `
-            <p class='title-popup'>${nameDot}</p>
+            <p class='title-popup' style={{fontFamily: 'var(--chakra-fonts-heading)'}}>${nameDot}</p>
           `,
         )
         .setLngLat([Number(cords.lat), Number(cords.long)])

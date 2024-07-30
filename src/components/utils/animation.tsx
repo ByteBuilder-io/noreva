@@ -47,7 +47,7 @@ const ContentAnimation = ({
         ? maxWidth >= 2000
           ? maxWidth - maxWidth * 0.7
           : maxWidth <= 700
-            ? maxWidth - maxWidth * 0.45
+            ? maxWidth - maxWidth * 0.5
             : maxWidth - maxWidth * 0.45
         : maxWidth - maxWidth * 0.3
 
