@@ -4,7 +4,6 @@ import Divider from '../divider/divider'
 const VirtualView = ({ data }) => {
   return (
     <>
-      {data.dividerTop && <Divider />}
       <Box m={'auto'} pt={'70px'} pb={'70px'}>
         <iframe
           src={data.url}

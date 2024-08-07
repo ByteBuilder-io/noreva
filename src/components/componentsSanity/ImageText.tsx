@@ -90,7 +90,6 @@ const ImageText = ({ data }: { data: any }) => {
       ref={ref}
       style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}
     >
-      {data.dividerTop && <Divider />}
       <Container
         m={'auto'}
         maxW={'1420px'}

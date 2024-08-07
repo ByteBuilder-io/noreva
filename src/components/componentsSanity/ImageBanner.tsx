@@ -24,7 +24,6 @@ const ImageBanner = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      {data.dividerTop && <Divider />}
       <Box pt={'70px'} pb={'70px'}>
         {image && (
           <Box

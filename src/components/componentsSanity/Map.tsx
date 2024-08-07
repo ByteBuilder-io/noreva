@@ -86,7 +86,6 @@ const Map = ({ data }: { data: any }) => {
       ref={ref}
       style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}
     >
-      {data.dividerTop && <Divider />}
       <Container m={'auto'} maxW={'1420px'} pt={'70px'} pb={'70px'}>
         <ScaleFade initialScale={0.9} in={isInViewport}>
           {data.mapPosition ? (

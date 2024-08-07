@@ -21,7 +21,6 @@ const CategorySelector = ({ data }: { data: any }) => {
       ref={ref}
       style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}
     >
-      {data.dividerTop && <Divider />}
       <Container m={'auto'} maxW={'100%'} pt={'70px'} pb={'70px'}>
         <Stack
           direction={{ base: 'column', lg: 'row' }}

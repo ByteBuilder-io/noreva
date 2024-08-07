@@ -5,7 +5,6 @@ import Divider from '../divider/divider'
 const Stats = ({ data }: { data: any }) => {
   return (
     <div style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}>
-      {data.dividerTop && <Divider />}
       <Container m={'auto'} maxW={'1420px'} pt={'70px'} pb={'70px'}>
         <Stack direction={'column'} spacing={5}>
           <Stack
