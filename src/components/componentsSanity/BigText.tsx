@@ -48,7 +48,7 @@ const BigText = ({ data }: { data: any }) => {
       ref={ref}
       style={{ backgroundColor: data.bgColor ? data.bgColor.hex : 'white' }}
     >
-      <Container m={'auto'} maxW={'1420px'} pt={'150px'} pb={'150px'}>
+      <Container m={'auto'} maxW={'1420px'} pt={'50px'} pb={'50px'}>
         {/* <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: isInViewport ? 1 : 0, y: isInViewport ? 0 : 50 }}

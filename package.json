@@ -59,6 +59,7 @@
     "swiper": "^11.0.7"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.8",
     "@types/react": "18.2.55",
     "autoprefixer": "10.4.17",
     "eslint": "8.56.0",

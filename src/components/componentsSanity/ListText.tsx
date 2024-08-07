@@ -132,7 +132,7 @@ const ListText = ({ data }) => {
                 >
                   {getPatternedContent(item, index)}
                   {/* Espacio entre textos adicionales */}
-                  <Box w="150px" />
+                  <Box w={{base: "20px", lg: "50px"}} />
                 </Stack>
               </Marquee>
             </Box>

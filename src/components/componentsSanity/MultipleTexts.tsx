@@ -55,15 +55,15 @@ const MultipleTexts = ({ data }: { data: any }) => {
   }, [data])
 
   return (
-    <div
+    <Box
       ref={ref}
       style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '90vh',
         backgroundColor: data.bgColor ? data.bgColor.hex : 'white',
       }}
+      height={{base: '50vh', lg: '90vh'}}
     >
       <div
         style={{
@@ -85,7 +85,7 @@ const MultipleTexts = ({ data }: { data: any }) => {
           />
         </Box>
       </div>
-    </div>
+    </Box>
   )
 }
 export default MultipleTexts

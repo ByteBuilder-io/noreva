@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   Divider,
   Heading,
@@ -47,13 +48,14 @@ const components: Partial<PortableTextReactComponents> = {
         ? 'noreferrer noopener'
         : undefined
       return (
-        <Link
-          style={{ textDecoration: 'underline black' }}
-          href={value.href}
-          rel={rel}
-        >
-          {children}
-        </Link>
+        <Button bg={'#a96648'} _hover={{ bg: '#9e5f43' }} color={'white'}>
+          <Link            
+            href={value.href}
+            rel={rel}
+          >
+            {children}
+          </Link>
+        </Button>
       )
     },
   },
